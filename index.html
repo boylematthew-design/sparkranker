@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   SparkRanker | AI Website Growth
+  </title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+   <style>
+     body {
+       font-family: 'Inter', sans-serif;
+       margin: 0;
+       padding: 0;
+       background-color: #ffffff;
+       color: #111;
+     }
+
+     header {
+       padding: 4rem 2rem;
+       text-align: center;
+       background: linear-gradient(135deg, #0d0d0d, #292929);
+       color: white;
+     }
+
+     header h1 {
+       font-size: 3rem;
+       font-weight: 700;
+       margin-bottom: 1rem;
+     }
+
+     header p {
+       font-size: 1.25rem;
+       margin-bottom: 2rem;
+       color: #e0e0e0;
+     }
+
+     form {
+       display: flex;
+       justify-content: center;
+       gap: 0.75rem;
+       flex-wrap: wrap;
+     }
+
+     input[type="text"],
+     input[type="url"],
+     input[type="email"] {
+       padding: 1rem 1.25rem;
+       font-size: 1rem;
+       border: none;
+       border-radius: 8px;
+       width: 280px;
+       background: #f2f2f2;
+       box-sizing: border-box;
+     }
+
+     button {
+       padding: 1rem 1.5rem;
+       font-size: 1rem;
+       border: none;
+       background-color: #00d084;
+       color: #111;
+       border-radius: 8px;
+       font-weight: bold;
+       cursor: pointer;
+     }
+
+     section {
+       padding: 3rem 2rem;
+       max-width: 800px;
+       margin: 0 auto;
+     }
+
+     section h2 {
+       font-size: 2rem;
+       margin-bottom: 1.5rem;
+       text-align: center;
+     }
+
+     ul {
+       list-style: none;
+       padding: 0;
+     }
+
+     .why-spark li {
+       margin: 1rem 0;
+       font-size: 1.2rem;
+       text-align: center;
+     }
+
+     .examples {
+       background-color: #f3f3f3;
+       padding: 3rem 2rem;
+       border-top: 1px solid #ddd;
+     }
+
+     .examples h2 {
+       text-align: center;
+       font-size: 2rem;
+       margin-bottom: 2rem;
+     }
+
+     .example-card {
+       background: white;
+       border-radius: 12px;
+       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+       margin: 1.5rem auto;
+       padding: 2rem;
+       max-width: 600px;
+       display: flex;
+       gap: 1rem;
+       align-items: center;
+     }
+
+     .example-icon {
+       flex-shrink: 0;
+       width: 48px;
+       height: 48px;
+     }
+
+     .example-content {
+       flex: 1;
+     }
+
+     .example-card h3 {
+       font-size: 1.25rem;
+       margin-bottom: 0.5rem;
+       color: #0d0d0d;
+     }
+
+     .example-card p {
+       font-size: 1rem;
+       color: #333;
+       margin: 0;
+     }
+
+     footer {
+       text-align: center;
+       font-size: 0.9rem;
+       padding: 2rem 1rem;
+       color: #666;
+       background-color: #f8f8f8;
+     }
+
+     footer a {
+       margin: 0 1rem;
+       color: #333;
+       text-decoration: none;
+     }
+
+     @media (max-width: 600px) {
+       header h1 {
+         font-size: 2rem;
+       }
+       header p {
+         font-size: 1rem;
+       }
+       .example-card {
+         flex-direction: column;
+         text-align: center;
+       }
+       .example-icon {
+         margin-bottom: 1rem;
+       }
+     }
+
+     .carousel-wrapper {
+       overflow-x: auto;
+       scroll-snap-type: x mandatory;
+       -webkit-overflow-scrolling: touch;
+       padding-bottom: 1rem;
+       scrollbar-width: none;
+     }
+
+     .carousel-wrapper::-webkit-scrollbar {
+       display: none;
+     }
+
+     .carousel-track {
+       display: flex;
+       gap: 1.5rem;
+       min-width: max-content;
+       padding: 1rem 0;
+     }
+
+     .carousel-card {
+       scroll-snap-align: start;
+       flex: 0 0 auto;
+     }
+
+     .card {
+       background: white;
+       border-radius: 16px;
+       padding: 1rem 1.25rem;
+       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04);
+       width: 100%;
+       max-width: 400px;
+       display: flex;
+       flex-direction: column;
+       gap: 1rem;
+       scroll-snap-align: start;
+       flex: 0 0 auto;
+     }
+
+     .card-header {
+       display: flex;
+       align-items: center;
+       gap: 0.75rem;
+     }
+
+     .bullet-item {
+       display: flex;
+       align-items: flex-start;
+       gap: 0.5rem;
+       margin-bottom: 0.5rem;
+     }
+
+     .carousel-btn {
+       position: absolute;
+       top: 50%;
+       transform: translateY(-50%);
+       background: white;
+       border: none;
+       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+       border-radius: 50%;
+       width: 44px;
+       height: 44px;
+       cursor: pointer;
+       z-index: 10;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       transition: background 0.2s ease;
+       font-size: 1.25rem;
+       color: #111;
+     }
+
+     .carousel-btn:hover {
+       background: #f0f0f0;
+     }
+
+     .carousel-btn:focus {
+       outline: none;
+       box-shadow: 0 0 0 3px rgba(0, 208, 132, 0.3);
+     }
+
+     .left-btn {
+       left: 0.75rem;
+     }
+
+     .right-btn {
+       right: 0.75rem;
+     }
+
+     @media (hover: none) {
+       .carousel-btn {
+         width: 56px;
+         height: 56px;
+         font-size: 1.5rem;
+       }
+     }
+   </style>
+
+ </head>
+ <body>
+  <header>
+   <div style="text-align: right; margin-bottom: 1rem;">
+    <a href="#" style="padding: 0.6rem 1.25rem; background-color: #ffffff; color: #0d0d0d; font-weight: 600; border-radius: 6px; text-decoration: none; display: inline-block;">
+     Manage Account
+    </a>
+   </div>
+   <h1>
+    SparkRanker
+   </h1>
+   <p>
+    Get tailored AI advice &amp; tools to grow your business online
+   </p>
+   <form id="step-form" style="max-width: 400px; margin: 0 auto;">
+    <div id="step-heading" style="margin-bottom: 1rem; font-size: 1.2rem; font-weight: 600;">
+     Step 1 of 3: What's your name?
+    </div>
+    <div id="step-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;">
+     <input autocomplete="name" id="input-fullname" placeholder="Full Name" required="" style="padding: 1rem; border-radius: 8px; border: none; background: #f3f3f3; width: 280px;" type="text"/>
+     <button id="next-btn" style="padding: 1rem 1.5rem; background: #00d084; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;" type="button">
+      Next
+     </button>
+    </div>
+    <button id="submit-btn" style="display: none; margin-top: 1.5rem; padding: 1rem 1.5rem; background: #00d084; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;" type="submit">
+     Join Waitlist
+    </button>
+   </form>
+   <p id="success-message" style="display:none; color: #00d084; font-weight: bold; text-align: center; margin-top: 1rem;">
+    ✅ You're on the waitlist!
+   </p>
+   <script>
+    const stepForm = document.getElementById("step-form");
+      const container = document.getElementById("step-container");
+      const heading = document.getElementById("step-heading");
+      const submitBtn = document.getElementById("submit-btn");
+
+      let step = 1;
+      const formData = {
+        fullname: "",
+        website: "",
+        email: ""
+      };
+
+      function renderStep(html, focusId, headingText, showSubmit = false) {
+        container.innerHTML = html;
+        heading.textContent = headingText;
+        if (showSubmit) submitBtn.style.display = "inline-block";
+        else submitBtn.style.display = "none";
+
+        setTimeout(() => {
+          document.getElementById(focusId).focus();
+          const next = document.getElementById("next-btn");
+          if (next) next.addEventListener("click", handleStepAdvance);
+        }, 20);
+      }
+
+      function handleStepAdvance() {
+        let input;
+        if (step === 1) {
+          input = document.getElementById("input-fullname");
+          if (!input.value.trim()) return;
+          formData.fullname = input.value.trim();
+          renderStep(
+            `
+            <input type="url" id="input-website" placeholder="Website URL (https://example.com)" required pattern="https?://.+" style="padding: 1rem; border-radius: 8px; border: none; background: #f3f3f3; width: 280px;" />
+            <button type="button" id="next-btn" style="padding: 1rem 1.5rem; background: #00d084; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;">Next</button>
+            `,
+            "input-website",
+            "Step 2 of 3: What's your website?"
+          );
+        } else if (step === 2) {
+          input = document.getElementById("input-website");
+          if (!input.checkValidity()) return;
+          formData.website = input.value.trim();
+          renderStep(
+            `
+            <input type="email" id="input-email" placeholder="Email" required autocomplete="email" style="padding: 1rem; border-radius: 8px; border: none; background: #f3f3f3; width: 280px;" />
+            `,
+            "input-email",
+            "Step 3 of 3: What's your email?",
+            true
+          );
+        }
+        step++;
+      }
+
+      document.getElementById("next-btn").addEventListener("click", handleStepAdvance);
+
+      container.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          if (step < 3) handleStepAdvance();
+          else stepForm.requestSubmit();
+        }
+      });
+
+      stepForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const input = document.getElementById("input-email");
+        if (!input.checkValidity()) return;
+        formData.email = input.value.trim();
+
+        const params = new URLSearchParams();
+        params.append("fullname", formData.fullname);
+        params.append("website", formData.website);
+        params.append("email", formData.email);
+
+        fetch("https://script.google.com/macros/s/AKfycbxrkcuzvde3eIcnidW6KDV-tLotPr0972BL4f4YKyy7snXzBpjFR3qwSv5wFXsUY3jo/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: params
+        }).then(response => {
+          if (response.ok) {
+            stepForm.reset();
+            stepForm.style.display = "none";
+            document.getElementById("success-message").style.display = "block";
+          } else {
+            alert("Oops! Something went wrong. Please try again.");
+          }
+        }).catch(error => {
+          alert("There was an error. Please try again.");
+          console.error("Error:", error);
+        });
+      });
+   </script>
+   <p id="success-message" style="display:none; color: green; font-weight: bold; margin-top: 1rem;">
+    ✅ You're on the waitlist!
+   </p>
+  </header>
+  <section style="padding: 4rem 2rem; background: #f6f7fb;">
+   <h2 style="text-align: center; font-size: 2rem; font-weight: 700;">
+    Live Alert Feed
+   </h2>
+   <p style="text-align: center; color: #555; max-width: 600px; margin: 0.5rem auto 2.5rem;">
+    Here&rsquo;s how SparkRanker alerts appear inside your dashboard. Actionable, real-time insights&mdash;delivered in a format you&rsquo;ll actually use.
+   </p>
+   <!-- Fake dashboard window -->
+   <div style="max-width: 800px; margin: 0 auto; background: #1f1f1f; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.2); padding: 2rem; position: relative; overflow: hidden;">
+    <!-- Clean top bar with bell only -->
+    <div class="card-header">
+     <div class="card-header">
+       <!-- Alerts Header (right-aligned) -->
+       <div style="width: 100%; display: flex; justify-content: flex-end; margin-bottom: 1.5rem;">
+         <div style="display: flex; align-items: center; gap: 0.5rem;">
+           <img src="https://cdn-icons-png.flaticon.com/512/1827/1827279.png" alt="Bell Icon" style="width: 20px; height: 20px; filter: invert(80%);" />
+           <span style="color: #eee; font-weight: 500; font-size: 0.9rem;">Alerts</span>
+         </div>
+       </div>
+      </span>
+     </div>
+    </div>
+    <!-- Alert cards inside mock dashboard -->
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+     <!-- Notification 1 -->
+     <div class="alert-card" style="animation-delay: 0.1s; display: flex; gap: 1rem; background: #2c2c2c; color: #eee; padding: 1rem; border-radius: 10px; align-items: flex-start;">
+      <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" style="width: 32px; height: 32px; margin-top: 2px; filter: brightness(200%);"/>
+      <div style="flex: 1;">
+       <strong style="color: #fff;">
+        Your competitor&rsquo;s TikTok video went viral
+       </strong>
+       <p style="margin: 0.25rem 0 0.5rem; font-size: 0.95rem;">
+        It gained 49,344 views in the last 7 days. Consider running your own short-form video to match visibility.
+       </p>
+       <div style="font-size: 0.8rem; color: #aaa;">
+        4 hours ago
+       </div>
+       <!-- Action buttons -->
+       <div style="margin-top: 0.75rem; display: flex; gap: 0.5rem;">
+        <button style="padding: 0.4rem 0.9rem; background: #00d084; color: #111; border: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: default;">
+         View Insight
+        </button>
+        <button style="padding: 0.4rem 0.9rem; background: transparent; border: 1px solid #555; color: #bbb; border-radius: 6px; font-weight: 500; font-size: 0.9rem; cursor: default;">
+         Hide
+        </button>
+       </div>
+      </div>
+     </div>
+     <!-- Notification 2 -->
+     <div class="alert-card" style="animation-delay: 0.2s; display: flex; gap: 1rem; background: #2c2c2c; color: #eee; padding: 1rem; border-radius: 10px; align-items: flex-start;">
+      <img src="https://cdn-icons-png.flaticon.com/512/3250/3250518.png" style="width: 32px; height: 32px; margin-top: 2px; filter: brightness(200%);"/>
+      <div style="flex: 1;">
+       <strong style="color: #fff;">
+        Homepage speed dropped to a C
+       </strong>
+       <p style="margin: 0.25rem 0 0.5rem; font-size: 0.95rem;">
+        Your load time is 2.8s&mdash;slower than 67% of competitors. We recommend compressing hero image &amp; JS.
+       </p>
+       <div style="font-size: 0.8rem; color: #aaa;">
+        7 hours ago
+       </div>
+       <div style="margin-top: 0.75rem; display: flex; gap: 0.5rem;">
+        <button style="padding: 0.4rem 0.9rem; background: #00d084; color: #111; border: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: default;">
+         See Suggestions
+        </button>
+        <button style="padding: 0.4rem 0.9rem; background: transparent; border: 1px solid #555; color: #bbb; border-radius: 6px; font-weight: 500; font-size: 0.9rem; cursor: default;">
+         Hide
+        </button>
+       </div>
+      </div>
+     </div>
+     <!-- Notification 3 -->
+     <div class="alert-card" style="animation-delay: 0.3s; display: flex; gap: 1rem; background: #2c2c2c; color: #eee; padding: 1rem; border-radius: 10px; align-items: flex-start;">
+      <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" style="width: 32px; height: 32px; margin-top: 2px; filter: brightness(200%);"/>
+      <div style="flex: 1;">
+       <strong style="color: #fff;">
+        49 new content gaps found on your site
+       </strong>
+       <p style="margin: 0.25rem 0 0.5rem; font-size: 0.95rem;">
+        You&rsquo;re missing thousands of monthly searches. 12 blog topics + 3 service pages are recommended.
+       </p>
+       <div style="font-size: 0.8rem; color: #aaa;">
+        1 day ago
+       </div>
+       <div style="margin-top: 0.75rem; display: flex; gap: 0.5rem;">
+        <button style="padding: 0.4rem 0.9rem; background: #00d084; color: #111; border: none; border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: default;">
+         View Opportunities
+        </button>
+        <button style="padding: 0.4rem 0.9rem; background: transparent; border: 1px solid #555; color: #bbb; border-radius: 6px; font-weight: 500; font-size: 0.9rem; cursor: default;">
+         Hide
+        </button>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- ================================ -->
+  <!-- 🚀 SECTION: Tools to grow       -->
+  <!-- ================================ -->
+  <section style="padding: 4rem 2rem; background: #f3f5fa;">
+   <h2 style="text-align: center; font-size: 2rem; font-weight: 700; margin-bottom: 3rem;">
+    Tools to grow
+   </h2>
+   <div style="position: relative;">
+     <!-- Left arrow -->
+     <button class="carousel-btn left-btn" onclick="scrollCarousel(-1)">
+       &larr;
+     </button>
+
+     <!-- Right arrow -->
+     <button class="carousel-btn right-btn" onclick="scrollCarousel(1)">
+       &rarr;
+     </button>
+    <!-- Carousel -->
+    <div class="carousel-wrapper" id="cardCarousel" onwheel="this.scrollBy({left: event.deltaY &lt; 0 ? -50 : 50})">
+     <div style="display: flex; gap: 1.5rem; padding: 1rem 0; min-width: max-content;">
+      <!-- ✅ Local Services Card -->
+      <div style="scroll-snap-align: start; flex: 0 0 auto;">
+       <div class="card">
+        <div class="card-header">
+         <div class="card-header">
+          <img alt="Local Icon" src="https://cdn-icons-png.flaticon.com/512/535/535137.png" style="width: 24px; height: 24px;">
+          </img>
+         </div>
+         <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700;">
+          Local services
+         </h3>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem; color: #333;">
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Optimize your Google Business Profile
+          </span>
+         </li>
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Get listed in top local directories
+          </span>
+         </li>
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Respond to reviews with AI
+          </span>
+         </li>
+        </ul>
+        <img alt="Graph &amp; Map Example" src="media/local.png" style="width: 100%; height: auto; border-radius: 8px;">
+         <a href="#" onmouseout="this.style.background='#ff5722'" onmouseover="this.style.background='#e14a1f'" style="background: #ff5722; color: white; text-align: center; font-weight: 600; font-size: 0.9rem; padding: 0.65rem 1rem; border-radius: 6px; text-decoration: none; transition: background 0.2s ease;">
+          Try for free
+         </a>
+        </img>
+       </div>
+      </div>
+      <!-- ✅ SEO Tools Card -->
+      <div style="scroll-snap-align: start; flex: 0 0 auto;">
+       <div class="card">
+        <div class="card-header">
+         <div class="card-header">
+          <img alt="SEO Icon" src="https://cdn-icons-png.flaticon.com/512/535/535137.png" style="width: 24px; height: 24px;">
+          </img>
+         </div>
+         <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700;">
+          SEO Tools
+         </h3>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem; color: #333;">
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Track keyword rankings weekly
+          </span>
+         </li>
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Analyze competitors&rsquo; backlinks
+          </span>
+         </li>
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Optimize pages for search intent
+          </span>
+         </li>
+        </ul>
+        <img alt="SEO Example" src="media/seo.png" style="width: 100%; height: auto; border-radius: 8px;">
+         <a href="#" onmouseout="this.style.background='#ff5722'" onmouseover="this.style.background='#e14a1f'" style="background: #ff5722; color: white; text-align: center; font-weight: 600; font-size: 0.9rem; padding: 0.65rem 1rem; border-radius: 6px; text-decoration: none; transition: background 0.2s ease;">
+          Try for free
+         </a>
+        </img>
+       </div>
+      </div>
+      <!-- ✅ Technical Help Card -->
+      <div style="scroll-snap-align: start; flex: 0 0 auto;">
+       <div class="card">
+        <div class="card-header">
+         <div class="card-header">
+          <img alt="Technical Icon" src="https://cdn-icons-png.flaticon.com/512/535/535137.png" style="width: 24px; height: 24px;"/>
+         </div>
+         <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700;">
+          Technical Help
+         </h3>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem; color: #333;">
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Fix slow load speed issues
+          </span>
+         </li>
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Check broken links and pages
+          </span>
+         </li>
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Audit Core Web Vitals
+          </span>
+         </li>
+        </ul>
+        <img alt="Technical Example" src="media/technical.png" style="width: 100%; height: auto; border-radius: 8px;"/>
+        <a href="#" onmouseout="this.style.background='#ff5722'" onmouseover="this.style.background='#e14a1f'" style="background: #ff5722; color: white; text-align: center; font-weight: 600; font-size: 0.9rem; padding: 0.65rem 1rem; border-radius: 6px; text-decoration: none; transition: background 0.2s ease;">
+         Try for free
+        </a>
+       </div>
+      </div>
+      <!-- ✅ Social Card -->
+      <div style="scroll-snap-align: start; flex: 0 0 auto;">
+       <div class="card">
+        <div class="card-header">
+         <div class="card-header">
+          <img alt="Social Icon" src="https://cdn-icons-png.flaticon.com/512/1384/1384031.png" style="width: 24px; height: 24px;"/>
+         </div>
+         <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700;">
+          Social
+         </h3>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem; color: #333;">
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Auto-post to Instagram, Facebook, LinkedIn
+          </span>
+         </li>
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Find top-performing content ideas
+          </span>
+         </li>
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Track likes, comments, and shares
+          </span>
+         </li>
+        </ul>
+        <img alt="Social Dashboard Example" src="media/social.png" style="width: 100%; height: auto; border-radius: 8px;"/>
+        <a href="#" onmouseout="this.style.background='#ff5722'" onmouseover="this.style.background='#e14a1f'" style="background: #ff5722; color: white; text-align: center; font-weight: 600; font-size: 0.9rem; padding: 0.65rem 1rem; border-radius: 6px; text-decoration: none; transition: background 0.2s ease;">
+         Try for free
+        </a>
+       </div>
+      </div>
+      <!-- ✅ Content Optimisations Card -->
+      <div style="scroll-snap-align: start; flex: 0 0 auto;">
+       <div class="card">
+        <div class="card-header">
+         <div class="card-header">
+          <img alt="Content Icon" src="https://cdn-icons-png.flaticon.com/512/535/535137.png" style="width: 24px; height: 24px;"/>
+         </div>
+         <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700;">
+          Content Optimisations
+         </h3>
+        </div>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95rem; color: #333;">
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Improve readability &amp; tone
+          </span>
+         </li>
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Find missing content gaps
+          </span>
+         </li>
+         <li class="bullet-item">
+          <span style="margin-top: 0.5em; width: 6px; height: 6px; background: #000; border-radius: 50%; flex-shrink: 0;">
+          </span>
+          <span>
+           Update old posts to boost ranking
+          </span>
+         </li>
+        </ul>
+        <img alt="Content Example" src="media/content.png" style="width: 100%; height: auto; border-radius: 8px;"/>
+        <a href="#" onmouseout="this.style.background='#ff5722'" onmouseover="this.style.background='#e14a1f'" style="background: #ff5722; color: white; text-align: center; font-weight: 600; font-size: 0.9rem; padding: 0.65rem 1rem; border-radius: 6px; text-decoration: none; transition: background 0.2s ease;">
+         Try for free
+        </a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <section class="section" style="background: #f9fafc; border-radius: 12px;">
+   <h2 class="text-center" style="margin-bottom: 2rem;">
+    Why SparkRanker?
+   </h2>
+   <div style="display: flex; justify-content: center;">
+    <ul style="
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        max-width: 480px;
+      ">
+     <li class="bullet-item">
+      <img alt="Check" src="https://cdn-icons-png.flaticon.com/512/190/190411.png" style="width: 20px; height: 20px; margin-top: 2px;"/>
+      <span style="font-size: 1rem; color: #222;">
+       Built for small business owners
+      </span>
+     </li>
+     <li class="bullet-item">
+      <img alt="Check" src="https://cdn-icons-png.flaticon.com/512/190/190411.png" style="width: 20px; height: 20px; margin-top: 2px;"/>
+      <span style="font-size: 1rem; color: #222;">
+       Actionable insights, not fluff
+      </span>
+     </li>
+     <li class="bullet-item">
+      <img alt="Check" src="https://cdn-icons-png.flaticon.com/512/190/190411.png" style="width: 20px; height: 20px; margin-top: 2px;"/>
+      <span style="font-size: 1rem; color: #222;">
+       Improve traffic, conversions, and sales
+      </span>
+     </li>
+    </ul>
+   </div>
+  </section>
+  <footer>
+   <nav style="margin-bottom: 1rem;">
+    <a href="#">
+     About this service
+    </a>
+    <a href="#">
+     Terms of service
+    </a>
+    <a href="#">
+     Privacy Policy
+    </a>
+    <a href="#">
+     Help and Support
+    </a>
+   </nav>
+   <div style="margin-top: 1rem; color: #888; font-size: 0.9rem;">
+    Made with
+    <span style="color: #e25555; font-size: 1rem;">
+     ❤️
+    </span>
+    in London
+   </div>
+   &copy; 2025 SparkRanker. All rights reserved.
+  </footer>
+ </body>
+ <script>
+  function scrollCarousel(direction) {
+      const container = document.getElementById('cardCarousel');
+      const scrollAmount = 420; // Adjust if you want to scroll by more/less
+      container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+ </script>
+</html>
